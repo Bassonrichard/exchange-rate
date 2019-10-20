@@ -1,0 +1,43 @@
+<div fxLayout="row" fxLayoutAlign="center center" >
+  <br/>
+    <mat-card >
+      <form class="example-form" [formGroup]="conversionForm" (ngSubmit)="onSubmit(conversionForm.value)">
+        <h4>Transaction Type</h4>
+        <mat-form-field>
+          <mat-label>Transaction Type</mat-label>
+          <mat-select formControlName="transactionType">
+            <mat-option *ngFor="let transactionType of transactionTypes"  [value]="transactionType.value">
+              {{transactionType.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <h4>Currency</h4>
+        <mat-form-field>
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName="currencyCode">
+              <mat-option *ngFor="let currencyCode of currencies"   [value]="currencyCode.value">
+                {{currencyCode.viewValue}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Amount to Convert</h4>
+        <mat-form-field>
+            <input matInput currencyMask formControlName="amount" placeholder="amount">
+        </mat-form-field>
+
+        <br/>
+        <button mat-raised-button color="primary">Convert</button>
+
+      </form>
+      </mat-card>
+
+      <br/>
+
+      <mat-card *ngIf="responseVal != undefined">
+        <h4>Converted Value: </h4>
+        <mat-label>R {{responseVal.convertedValue}}</mat-label>
+      </mat-card>
+</div>
+
