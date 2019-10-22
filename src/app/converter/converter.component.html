@@ -6,8 +6,8 @@
         <mat-form-field>
           <mat-label>Transaction Type</mat-label>
           <mat-select formControlName="transactionType">
-            <mat-option *ngFor="let transactionType of transactionTypes"  [value]="transactionType.value">
-              {{transactionType.viewValue}}
+            <mat-option *ngFor="let transactionType of transactionTypes"  [value]="transactionType.key">
+              {{transactionType.value}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -16,8 +16,8 @@
         <mat-form-field>
             <mat-label>Currency</mat-label>
             <mat-select formControlName="currencyCode">
-              <mat-option *ngFor="let currencyCode of currencies"   [value]="currencyCode.value">
-                {{currencyCode.viewValue}}
+              <mat-option *ngFor="let currencyCode of currencies"   [value]="currencyCode.key">
+                {{currencyCode.value}}
               </mat-option>
             </mat-select>
         </mat-form-field>

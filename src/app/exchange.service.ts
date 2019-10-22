@@ -5,11 +5,10 @@ import { ExchangeRateValueResp } from './Interfaces/ExchangeRateValueResp'
 import { Conversion } from './Interfaces/conversion'
 
 import { Observable, throwError, PartialObserver } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
 
-import { ConfigService } from '../app/config.service';
-import { Config } from '../app/Interfaces/Config'
+
+import { environment } from '../environments/environment'
+import { Lookup } from '../app/Interfaces/Lookup'
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type':  'application/json'})
@@ -18,26 +17,24 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ExchangeService {
-  config:Config;
-
-
+export class ExchangeService{
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
     )
     {
-      this.configService.getConfig()
-      .subscribe((data: Config) => this.config = {
-        exchangeUrl:  data['exchangeUrl']
-      });
+    }
 
-     }
+  postExchnageRate (conversion: Conversion): Observable<ExchangeRateValueResp>{
+    return this.http.post<ExchangeRateValueResp>(environment.exchangeUrl, conversion, httpOptions);
+  }
 
-  postExchnageRate (conversion: Conversion): Observable<ExchangeRateValueResp>
-  {
-    return this.http.post<ExchangeRateValueResp>(this.config.exchangeUrl, conversion, httpOptions);
+  getCurrencyCode (): Observable<Lookup[]>{
+    return this.http.get<Lookup[]>(environment.currencyCodeUrl, httpOptions);
+  }
+
+  getTransactionType (): Observable<Lookup[]>{
+    return this.http.get<Lookup[]>(environment.transactionTypeUrl, httpOptions);
   }
 
   private handleError(error: HttpErrorResponse) {
